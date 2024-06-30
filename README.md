@@ -1,11 +1,5 @@
 # Hypixel Auction Tracker
 
-## TODO
-
-loading/error/empty message
-
-# Hypixel Auction Tracker
-
 A Near Real-Time Auction Tracker for Hypixel Skyblock
 
 ## Table of Contents
