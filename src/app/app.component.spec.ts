@@ -1,10 +1,14 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let compiled: HTMLElement;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, HttpClientTestingModule],
     }).compileComponents();
   });
 
@@ -14,16 +18,19 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'main' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('main');
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    compiled = fixture.debugElement.nativeElement;
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, main');
+  it('should render filter', () => {
+    const filterElement = compiled.querySelector('app-filter');
+    expect(filterElement).toBeTruthy();
+  });
+
+  it('should render table', () => {
+    const tableElement = compiled.querySelector('app-table');
+    expect(tableElement).toBeTruthy();
   });
 });

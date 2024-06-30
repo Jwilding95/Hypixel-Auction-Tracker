@@ -1,0 +1,220 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/transitions.scss";
+
+html, body, p {
+    padding: 0;
+    margin: 0;
+}
+
+@font-face {
+    font-family: 'Minecraft';
+    src: url('https://fonts.cdnfonts.com/s/25041/1_MinecraftRegular1.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.main {
+    width: 100%;
+}
+
+.table-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: visible;
+}
+
+@media (max-width: 599px) {
+    .table-container {
+        overflow-x: auto;
+    }
+}
+
+table {
+    width: 100%;
+    min-width: 400px;
+    overflow-x: auto;
+    border-collapse: collapse;
+    background-color: #0a0a0a;
+}
+
+.th-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+th, td {
+    border: 1px solid #3b3b3b;
+    text-align: left;
+    padding: 0.5em;
+}
+
+th:nth-child(1), td:nth-child(1) { width: 15%; }
+th:nth-child(2), td:nth-child(2) { width: 40%; }
+th:nth-child(3), td:nth-child(3) { width: 15%; }
+th:nth-child(4), td:nth-child(4) { width: 15%; }
+th:nth-child(5), td:nth-child(5) { width: 15%; }
+
+th, tr {
+    transition: $hover-transition;
+}
+
+th:hover, tr:hover {
+    background-color: #232323;
+}
+
+
+.sorting-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.active {
+    color: #ffffff;
+}
+
+.inactive {
+    color: #3b3b3b;
+}
+
+#paginator {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1em;
+    padding: 1.5em 1em 6em;
+    color: #ffffff;
+
+    .items-per-page-container {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5em;
+        align-items: center;
+        text-align: center;
+    }
+
+    p {
+        margin: 0;
+        text-align: center;
+    }
+
+    .page-controls {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+        color: #3b3b3b;
+
+        mat-icon {
+            transition: $hover-transition;
+
+            &:hover {
+                cursor: pointer;
+                color: white;
+            }
+        }
+    }
+
+    select {
+        height: 34px;
+        border: 2px solid #3b3b3b;
+        border-radius: 7px;
+        background-color: #222222;
+        color: #ffffff;
+        padding-left: 0.5em;
+    }
+}
+
+.item-name, .info-name {
+    position: relative;
+    display: inline;
+    width: auto;
+}
+
+.item-card, .info-card {
+    position: absolute;
+    left: calc(100% + 2em);
+    display: none;
+    max-height: 35vh;
+    max-width: 30vw;
+    padding: 0.5em;
+    padding-right: calc(18px + 0.5em);
+    border: 2px solid #1b013b;
+    border-radius: 5px;
+    background-color: #100110;
+    font-family: 'Minecraft', sans-serif;
+    white-space: nowrap;
+    z-index: 1000;
+    overflow: auto;
+}
+
+.info-card {
+    top: -5px;
+}
+
+@media (min-width: 600px) {
+    .item-card-trigger:hover .item-card {
+        display: block;
+    }
+
+    .current-bid:hover .item-card {
+        display: block;
+    }
+}
+
+.item-card-0 { color: #000000; }
+.item-card-1 { color: #0000AA; }
+.item-card-2 { color: #00AA00; }
+.item-card-3 { color: #00AAAA; }
+.item-card-4 { color: #AA0000; }
+.item-card-5 { color: #AA00AA; }
+.item-card-6 { color: #FFAA00; }
+.item-card-7 { color: #AAAAAA; }
+.item-card-8 { color: #555555; }
+.item-card-9 { color: #5555FF; }
+.item-card-a { color: #55FF55; }
+.item-card-b { color: #55FFFF; }
+.item-card-c { color: #FF5555; }
+.item-card-d { color: #FF55FF; }
+.item-card-e { color: #FFFF55; }
+.item-card-f { color: #FFFFFF; }
+.item-card-l { font-weight: bold; }
+.item-card-m { text-decoration: line-through; }
+.item-card-n { text-decoration: underline; }
+.item-card-o { font-style: italic; }
+
+// .info {
+//     span {
+//         text-decoration: underline dotted;
+//     }
+
+//     span:hover {
+//         cursor: help;
+//     }
+
+//     span:hover .info-card {
+//         display: block;
+//     }
+// }
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+
+    span {
+        font-size: 10px;
+        padding: 5px 0;
+    }
+}
+
+.loading-wrapper {
+    width: 100%;
+    text-align: center;
+    padding: 2em 0;
+}

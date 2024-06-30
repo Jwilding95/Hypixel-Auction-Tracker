@@ -1,0 +1,34 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/transitions.scss";
+
+.header-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #272727;
+    border-bottom: 1px solid #3b3b3b;
+    width: 100%;
+}
+
+.title-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+    flex-wrap: nowrap;
+    width: fit-content;
+    cursor: pointer;
+}
+
+img {
+    height: 2.5em;
+    margin-right: -0.75em;
+}
+
+span {
+    font-size: 1.25em;
+    font-weight: bold;
+    white-space: nowrap;
+    color: white;
+}

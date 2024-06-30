@@ -1,0 +1,35 @@
+
+<main class="main">
+    <form class="filters">
+        <div class="search-bar-container">
+            <select [name]="categories.select" [formControl]="categoryForm">
+                <option value="all" selected>All Categories</option>
+                <option *ngFor="let option of categories.options" [value]="option">{{ option | titlecase }}</option>
+            </select>
+            <div class="search-wrapper">
+                <input id="search" type="search" placeholder="Search" [formControl]="searchForm" autocomplete="off">
+            </div>
+            <button class="search-icon-wrapper" (click)="setFilter()">
+                <mat-icon class="search-icon">search</mat-icon>
+            </button>
+        </div>
+        <button class="advanced-search-container" routerLink="/advanced-search">
+            <span>Advanced</span>
+        </button>
+    </form>
+    <div class="filter-chip-container" *ngIf="activeFilters.length > 0">
+        <div class="chip" *ngFor="let chip of activeFilters">
+            <div class="chip-text">
+                <span class="label">{{ chip.label }}: </span>
+                <span class="data">{{ chip.data | title }}</span>
+            </div>
+            <mat-icon (click)="removeFilter(chip.prop)">close</mat-icon>
+        </div>
+    </div>
+</main>
+
+<!-- <mat-autocomplete #auto="matAutocomplete" class="autocomplete" (optionSelected)="onFilterChange($event, 'search')">
+    @for (item of filteredItems | async; track item) {
+        <mat-option [value]="item">{{ item }}</mat-option>
+    }
+</mat-autocomplete> -->

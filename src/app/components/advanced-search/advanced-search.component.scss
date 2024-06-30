@@ -1,0 +1,228 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/transitions.scss";
+
+#main {
+    margin-top: 2em;
+}
+
+.back-button-container {
+    width: 100%;
+    margin-bottom: 1.5em;
+}
+
+.back-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-bottom: 1px solid #3b3b3b;
+    border-radius: 5px 5px 0 0;
+    padding: 0.5em;
+    transition: $hover-transition;
+
+    &:hover {
+      background-color: #202020;
+    }
+
+    mat-icon {
+        font-size: 21px;
+        height: 21px;
+        width: 21px;
+    }
+
+    span {
+        text-indent: 0.5em;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2em;
+}
+
+.advanced-search-heading {
+    color: white;
+    font-size: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 2px solid #3b3b3b;
+    box-sizing: border-box;
+    gap: 1em;
+}
+
+fieldset {
+    border: none;
+    border-bottom: 2px solid #3b3b3b;
+    padding-bottom: 2em;
+}
+
+legend {
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 1.25em;
+    padding-bottom: 0.5em;
+}
+
+.search-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5em;
+}
+
+label {
+    color: white;
+}
+
+input[type=search], input[type=text] {
+    color: white;
+    border: 2px solid #3b3b3b;
+    border-radius: 5px;
+    background-color: #121212;
+    width: 100%;
+    height: 34px;
+    text-indent: 0.5em;
+}
+
+select {
+    height: 40px;
+    border: 2px solid #3b3b3b;
+    border-radius: 5px;
+    background-color: #121212;
+    color: #82817e;
+    padding: 0 0.5em;
+}
+
+.apply-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 2em 0 6em;
+
+    input[type=submit] {
+        min-height: 40px;
+        min-width: 7em;
+        border: none;
+        border-radius: 40px;
+        background-color: #0060df;
+        color: white;
+        padding: 0 0.5em;
+        font-weight: 700;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #2075e4
+        }
+
+        &.disabled {
+          background-color: $inactive-icon-grey;
+
+          &:hover {
+            background-color: $inactive-icon-grey;
+            cursor: default;
+          }
+        }
+
+    }
+}
+
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    padding-left: 2em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1em;
+  width: 1em;
+  background-color: rgb(15, 15, 15);
+  border: 2px solid #3b3b3b;
+  border-radius: 5px;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #202020;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #3b3b3b;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 3.5px;
+  top: -1px;
+  width: 4px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+} 
+
+.radio-checkmark {
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 2px;
+}
+
+.radio-container .checkmark:after {
+  visibility: hidden;
+}
+
+.radio-container input:checked ~ .checkmark {
+  background-color: #ffffff;
+  border-width: 3px;
+}
+
+input {
+  transition: $hover-transition;
+
+  &:hover {
+    background-color: #202020
+  }
+}
+
+.error-wrapper {
+  padding-top: 0.5em;
+}
+
+.error-text {
+  color: $red
+}

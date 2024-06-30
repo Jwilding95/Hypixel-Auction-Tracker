@@ -1,0 +1,19 @@
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: default;
+    width: 100%;
+
+    app-header {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+app-home, app-advanced-search {
+    display: block;
+    width: 80%
+}

@@ -1,0 +1,58 @@
+<main class="main" *ngIf="filteredAuctions.length > 0; else noData">
+    <div class="table-container">
+        <table>
+            <thead>
+                <th *ngFor="let column of columns" (click)="onSortColumn(column)"> 
+                    <div class="th-container" [class.info]="column === 'Item'">
+                        <span class="info-name"> 
+                            {{ column }} 
+                            <div class="info-card"></div>
+                        </span>
+                        <div class="sorting-wrapper">
+                            <mat-icon [ngClass]="sortedColumn.column === column && sortedColumn.reverse ? 'active' : 'inactive'">expand_less</mat-icon>
+                            <mat-icon [ngClass]="sortedColumn.column === column && !sortedColumn.reverse ? 'active' : 'inactive'">expand_more</mat-icon>
+                        </div>
+                    </div>
+                </th>
+            </thead>
+            <tr *ngFor="let row of filteredAuctions | paginate: pageNumber:itemsPerPage">
+                <td> {{ row.bin ? "BIN" : "Auction" }} </td>
+                <td class="item-card-trigger" (mouseenter)="setItemCardTopBottom($event)"> 
+                    <span class="item-name"> 
+                        {{ row.item_name }} 
+                        <div class="item-card" 
+                            [ngStyle]="{'top.px': itemCardTopBottom ? null : -5, 'bottom.px': itemCardTopBottom ? -5 : null}" 
+                            [innerHTML]="transformLore(row.item_name, row.item_lore)">
+                        </div>
+                    </span>     
+                </td>
+                <td class="current-bid"> {{ (row.highest_bid_amount || row.starting_bid).toLocaleString('en-US') }} </td>
+                <td> {{ row.end | msToTime: now }} </td>
+            </tr>
+        </table>
+    </div>
+    <div id="paginator">
+        <div class="items-per-page-container">
+            <label for="itemsPerPageSelect">Items per page:</label>
+            <form>
+                <select name="itemsPerPageSelect" [(ngModel)]="itemsPerPage" (change)="onPageSizeChange($event)">
+                    <option *ngFor="let pageSize of pageSizeOptions" [value]="pageSize">{{pageSize}}</option>
+                </select>
+            </form>
+        </div>
+        <p>{{ pageStart }} - {{ pageEnd }} of {{ filteredAuctions.length }}</p>
+        <div class="page-controls">
+            <mat-icon aria-label="Previous page" (click)="onPageChange(-1)">chevron_left</mat-icon>
+            <mat-icon aria-label="Next Page" (click)="onPageChange(+1)">chevron_right</mat-icon>
+        </div>
+    </div>
+</main>
+<footer>
+    <span>For demonstration purposes, the data has been limited to 1000 items</span>
+</footer>
+
+<ng-template #noData [ngSwitch]="error ? 'error' : loading ? 'loading' : 'empty'">
+    <div *ngSwitchCase="'loading'" class="loading-wrapper">Loading...</div>
+    <div *ngSwitchCase="'empty'" class="loading-wrapper">No results found</div>
+    <div *ngSwitchCase="'error'" class="loading-wrapper">There was an error loading data. Please try again later</div>
+</ng-template>
