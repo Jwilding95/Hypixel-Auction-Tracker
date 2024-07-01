@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FilterComponent } from './components/filter/filter.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MatIconModule } from '@angular/material/icon';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
 })
 export class AppComponent {
 
