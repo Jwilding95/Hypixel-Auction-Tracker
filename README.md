@@ -1,6 +1,6 @@
 # Hypixel Auction Tracker
 
-A Near Real-Time Auction Tracker for Hypixel Skyblock
+A Real-Time Auction Tracker for Hypixel Skyblock
 
 ## Table of Contents
 
@@ -10,11 +10,11 @@ A Near Real-Time Auction Tracker for Hypixel Skyblock
 
 ## Introduction
 
-Detailed description of the project, its purpose, and what problem it solves.
+A web app with real-time data acquisition and processing of [Hypixel Skyblock auction data](https://api.hypixel.net/) with client-side transformation and indexing
 
 ## Features
 
-- Up-to-the-minute auction data
+- Real-Time auction data
 - Searchable and sortable NRT data
 - Advanced filters to widen or narrow your search
 
@@ -23,8 +23,8 @@ Detailed description of the project, its purpose, and what problem it solves.
 - User Accounts
 - Saved searches and search history
 - Expanded advanced search
-- NPC/Bazaar Profit calculator
+- NPC/Bazaar profit calculator
 - Historical auction data
 - Set alerts for items
 
-Upcoming infrastructure changes to make the tracker closer to real-time along with real-time updates
+Upcoming infrastructure changes to keep the app always up-to-date with live auction data
