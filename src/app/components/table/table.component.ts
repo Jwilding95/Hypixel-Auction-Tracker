@@ -107,6 +107,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public onPageSizeChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.itemsPerPage = +selectElement.value;
+    this._maxPages = Math.ceil(this.filteredAuctions.length / this.itemsPerPage) - 1;
     this._updatePageStartEnd();
   }
 
