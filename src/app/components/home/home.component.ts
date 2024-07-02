@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class HomeComponent {
 
   public hasYoffset: boolean = false;
-  public baseHref: string = 'Hypixel-Auction-Tracker'
+  public baseHref = document.location.href
 
   /**
    * Sets hasYoffset to a boolean value respective of whether the scroll has 
