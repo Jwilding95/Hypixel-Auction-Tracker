@@ -4,7 +4,7 @@
 .header-banner {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     background-color: #272727;
     border-bottom: 1px solid #3b3b3b;
     width: 100%;
@@ -31,4 +31,19 @@ span {
     font-weight: bold;
     white-space: nowrap;
     color: white;
+}
+
+.right {
+    padding-right: 1em;
+}
+
+.right, a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    height: 2em;
+    width: 2em;
 }
