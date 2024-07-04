@@ -195,6 +195,26 @@ export class TableComponent implements OnInit, OnDestroy {
     return [formattedName, formattedLines].join("<br>")
   }
 
+  public openModal(text: string) {
+    const modal = document.getElementById('modal');
+    const modalDiv = document.getElementById('modalDiv');
+    modalDiv!.innerHTML = text
+    modal!.style.display = 'flex';
+  }
+
+  public closeModal() {
+    const modal = document.getElementById('modal');
+    modal!.style.display = 'none';
+  }
+
+  /**
+   * Stops the click event from propogating when clicking the inner div
+   * @param event 
+   */
+  public stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+
   ngOnDestroy() {
     this._nowSubscription.unsubscribe();
   }

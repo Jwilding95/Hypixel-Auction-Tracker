@@ -17,7 +17,7 @@
             </thead>
             <tr *ngFor="let row of filteredAuctions | paginate: pageNumber:itemsPerPage">
                 <td> {{ row.bin ? "BIN" : "Auction" }} </td>
-                <td class="item-card-trigger" (mouseenter)="setItemCardTopBottom($event)"> 
+                <td class="item-card-trigger" (mouseenter)="setItemCardTopBottom($event)" (click)="openModal(transformLore(row.item_name, row.item_lore))"> 
                     <span class="item-name"> 
                         {{ row.item_name }} 
                         <div class="item-card" 
@@ -50,6 +50,10 @@
 <footer>
     <span>For demonstration purposes, the data has been limited to 1000 items</span>
 </footer>
+
+<div id="modal" (click)="closeModal()">
+    <div id="modalDiv" class="item-card-modal" (click)="stopPropagation($event)"></div>
+</div>
 
 <ng-template #noData [ngSwitch]="error ? 'error' : loading ? 'loading' : 'empty'">
     <div *ngSwitchCase="'loading'" class="loading-wrapper">Loading...</div>
