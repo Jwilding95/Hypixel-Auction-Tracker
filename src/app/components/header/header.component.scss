@@ -8,6 +8,10 @@
     background-color: #272727;
     border-bottom: 1px solid #3b3b3b;
     width: 100%;
+
+    div {
+        flex: 1
+    }
 }
 
 .title-wrapper {
@@ -33,14 +37,29 @@ span {
     color: white;
 }
 
-.right {
-    padding-right: 1em;
-}
 
-.right, a {
+.right, .left, .center, .routes, a {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.left .title-wrapper {
+    justify-content: flex-start;
+}
+
+.center {
+    gap: 2em;
+    margin: 0;
+    
+    .routes {
+        height: 50px;
+    }
+}
+
+.right {
+    padding-right: 1em;
+    justify-content: flex-end;
 }
 
 svg {
@@ -50,4 +69,8 @@ svg {
     path {
         fill: white;
     }
+}
+
+.is-active {
+    border-bottom: 2px solid white;
 }

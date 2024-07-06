@@ -1,9 +1,16 @@
 <div class="header-banner">
-    <div class="left"></div>
-    <div class="center">
+    <div class="left">
         <div class="title-wrapper" routerLink="/home">
             <img src="assets/images/hypixel-icon.webp">
             <span>ypixel Auction Tracker</span>
+        </div>
+    </div>
+    <div class="center">
+        <div class="routes" routerLink="/home" [routerLinkActive]="'is-active'">
+            <span>Auctions</span>
+        </div>
+        <div class="routes" routerLink="/bazaar" [routerLinkActive]="'is-active'">
+            <span>Bazaar</span>
         </div>
     </div>
     <div class="right">
