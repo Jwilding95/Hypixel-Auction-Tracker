@@ -4,7 +4,7 @@ import { TitleCasePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AuctionsService } from '../../services/auctions.service';
+import { AuctionsService } from '../../services/auctions/auctions.service';
 import { IFilter } from '../../models/filter.model';
 
 @Component({

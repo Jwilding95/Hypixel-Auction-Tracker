@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, forkJoin, of, throwError } from 'rxjs';
 import { map, concatMap, catchError } from 'rxjs/operators';
-import { IAuctionItem } from '../models/auction.model';
-import { IFilter } from '../models/filter.model';
+import { IAuctionItem } from '../../models/auction.model';
+import { IFilter } from '../../models/filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,6 @@ export class AuctionsService {
     private http: HttpClient
   ) { 
     this._initializeData();
-    
   }
 
   /**
@@ -150,12 +149,5 @@ export class AuctionsService {
       return { bin, category, end, highest_bid_amount, item_name,
         item_lore, starting_bid, tier };
     });
-  }
-
-  private _getItems() {
-    const apiUrl = "https://api.hypixel.net/v2/resources/skyblock/items";
-    return this.http.get<any>(apiUrl).pipe(
-      map(data => data.items)
-    );
   }
 }

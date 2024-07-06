@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuctionsService } from './auctions.service';
-import { IAuctionItem } from '../models/auction.model';
-import { IFilter } from '../models/filter.model';
+import { IAuctionItem } from '../../models/auction.model';
+import { IFilter } from '../../models/filter.model';
 
 describe('AuctionsService', () => {
   let service: AuctionsService;

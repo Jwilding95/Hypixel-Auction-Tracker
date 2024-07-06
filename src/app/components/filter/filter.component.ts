@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { IFilter } from '../../models/filter.model';
-import { AuctionsService } from '../../services/auctions.service';
+import { AuctionsService } from '../../services/auctions/auctions.service';
 import { TitleCasePipe } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';

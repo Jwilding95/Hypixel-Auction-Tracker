@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { IAuctionItem } from '../../models/auction.model';
 import { CommonModule } from '@angular/common';
-import { AuctionsService } from '../../services/auctions.service';
+import { AuctionsService } from '../../services/auctions/auctions.service';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MsToTimePipe } from '../../pipes/msToTime.pipe';
