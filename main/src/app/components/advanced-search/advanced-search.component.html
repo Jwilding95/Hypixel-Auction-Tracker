@@ -1,0 +1,117 @@
+<main>
+    <form #advancedSearchForm="ngForm" class="advanced-form" (ngSubmit)="onSubmit(advancedSearchForm)">
+        <div class="advanced-search-heading">
+            <span>Advanced Search</span>
+            <mat-icon appClickable class="close-button" aria-label="Close advanced search" (click)="closeSidebar.emit()">close</mat-icon>
+        </div>
+        <fieldset>
+            <legend>Search Text</legend>
+            <div class="search-wrapper">
+                <label for="searchString">Keywords</label>
+                <input name="searchString" type="search" placeholder="Enter Keywords" ngModel autocomplete="off">
+            </div>
+            <div class="search-wrapper">
+                <label for="excludeString">Exclude</label>
+                <input name="excludeString" type="search" placeholder="" ngModel autocomplete="off">
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Search By</legend>
+            <div class="search-wrapper">
+                <label class="container" for="item-description">Item Name and Description
+                    <input name="itemDescription" type="checkbox" id="item-description" [(ngModel)]="filterObject.itemDescription">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Auction Type</legend>
+            <div class="search-wrapper">
+                <label class="container radio-container" for="all">All
+                    <input type="radio" id="all" name="auctionType" [(ngModel)]="filterObject.auctionType" value="all">
+                    <span class="checkmark radio-checkmark"></span>
+                </label>
+            </div>
+            <div class="search-wrapper">
+                <label class="container radio-container" for="auction">Auction
+                    <input type="radio" id="auction" name="auctionType" [(ngModel)]="filterObject.auctionType" value="Auction">
+                    <span class="checkmark radio-checkmark"></span>
+                </label>
+            </div>
+            <div class="search-wrapper">
+                <label class="container radio-container" for="bin">BIN
+                    <input type="radio" id="bin" name="auctionType" [(ngModel)]="filterObject.auctionType" value="BIN">
+                    <span class="checkmark radio-checkmark"></span>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Price Range</legend>
+            <div class="search-wrapper">
+                <label for="minBid">Minimum Bid</label>
+                <input 
+                    name="minBid" 
+                    type="text" 
+                    min="0" 
+                    [max]="MAX_BID_AMOUNT - 1" 
+                    placeholder="0" 
+                    (ngModel)="filterObject.minBid" 
+                    #minBid="ngModel"
+                    pattern="^[0-9]*$"
+                    autocomplete="off">
+                    @if (minBid.invalid && (minBid.dirty || minBid.touched)) {
+                        <div class="error-wrapper">
+                            @if (minBid.errors!['pattern']) {
+                                <span class="error-text">Bids can only contain numeric characters (0-9)</span>
+                            }
+                        </div>
+                    }
+            </div>
+            <div class="search-wrapper">
+                <label for="maxBid">Maximum Bid</label>
+                <input 
+                    name="maxBid" 
+                    type="text" 
+                    min="0" 
+                    [max]="MAX_BID_AMOUNT" 
+                    [placeholder]="MAX_BID_AMOUNT - 1" 
+                    (ngModel)="filterObject.maxBid" 
+                    #maxBid="ngModel"
+                    pattern="^[0-9]*$"
+                    autocomplete="off">
+                    @if (maxBid.invalid && (maxBid.dirty || maxBid.touched)) {
+                        <div class="error-wrapper">
+                            @if (maxBid.errors!['pattern']) {
+                                <span class="error-text">Bids can only contain numeric characters (0-9)</span>
+                            }
+                        </div>
+                    }
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Category</legend>
+            <div class="search-wrapper">
+                <select name="category" [(ngModel)]="filterObject.category">
+                    <option value="all" selected>All Categories</option>
+                    @for (option of filterDropdowns.category.options; track option) {
+                        <option [value]="option">{{ option | titlecase }}</option>
+                    }
+                </select>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Tier</legend>
+            <div class="search-wrapper">
+                <select name="tier" [(ngModel)]="filterObject.tier">
+                    <option value="all" selected>All Tiers</option>
+                    @for (option of filterDropdowns.tier.options; track option) {
+                        <option [value]="option">{{ option | titlecase }}</option>
+                    }
+                </select>
+            </div>
+        </fieldset>
+        <div class="apply-wrapper">
+            <input type="submit" value="Apply" [disabled]="advancedSearchForm.invalid" [class.disabled]="advancedSearchForm.invalid">
+        </div>
+    </form>
+</main>

@@ -1,0 +1,82 @@
+@if (filteredAuctions().length > 0) {
+    <main class="main">
+        <div class="table-container">
+            <table>
+                <thead>
+                    @for (column of columns; track column) {
+                        <th appClickable (click)="onSortColumn(column)">
+                            <div class="th-container" [class.info]="column === 'Item'">
+                                <span class="info-name">
+                                    {{ column }}
+                                    <div class="info-card"></div>
+                                </span>
+                                <div class="sorting-wrapper">
+                                    <mat-icon [ngClass]="sortedColumn().column === column && sortedColumn().reverse ? 'active' : 'inactive'">expand_less</mat-icon>
+                                    <mat-icon [ngClass]="sortedColumn().column === column && !sortedColumn().reverse ? 'active' : 'inactive'">expand_more</mat-icon>
+                                </div>
+                            </div>
+                        </th>
+                    }
+                </thead>
+                @for (row of filteredAuctions() | paginate: pageNumber():itemsPerPage(); track row.uuid) {
+                    <tr>
+                        <td> {{ row.bin ? "BIN" : "Auction" }} </td>
+                        <td class="item-card-trigger" appClickable (mouseenter)="setItemCardTopBottom($event)" (click)="openModal(row)">
+                            <span class="item-name">
+                                {{ row.item_name }}
+                                <div class="item-card"
+                                    [ngStyle]="{'top.px': itemCardTopBottom ? null : -5, 'bottom.px': itemCardTopBottom ? -5 : null}"
+                                    [innerHTML]="row.item_name | loreTransform : row.item_lore">
+                                </div>
+                            </span>
+                        </td>
+                        <td class="current-bid"> {{ (row.highest_bid_amount || row.starting_bid).toLocaleString('en-US') }} </td>
+                        <td> {{ row.end | msToTime: now() }} </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="paginator">
+            <div class="items-per-page-container">
+                <label for="itemsPerPageSelect">Items per page:</label>
+                <form>
+                    <select name="itemsPerPageSelect" [ngModel]="itemsPerPage()" (change)="onPageSizeChange($event)">
+                        @for (pageSize of pageSizeOptions; track pageSize) {
+                            <option [value]="pageSize">{{pageSize}}</option>
+                        }
+                    </select>
+                </form>
+            </div>
+            <p>{{ pageStart() }} - {{ pageEnd() }} of {{ filteredAuctions().length }}</p>
+            <div class="page-controls">
+                <mat-icon appClickable aria-label="First page" (click)="goToFirstPage()">first_page</mat-icon>
+                <mat-icon appClickable aria-label="Previous page" (click)="onPageChange(-1)">chevron_left</mat-icon>
+                @for (page of pageNumbers(); track $index) {
+                    @if (page === 'ellipsis') {
+                        <span class="page-ellipsis">…</span>
+                    } @else {
+                        <span class="page-number" appClickable [class.current]="page === pageNumber()" (click)="goToPage(page)">{{ page + 1 }}</span>
+                    }
+                }
+                <mat-icon appClickable aria-label="Next Page" (click)="onPageChange(+1)">chevron_right</mat-icon>
+                <mat-icon appClickable aria-label="Last page" (click)="goToLastPage()">last_page</mat-icon>
+            </div>
+        </div>
+    </main>
+} @else {
+    @switch (error() ? 'error' : loading() ? 'loading' : 'empty') {
+        @case ('loading') { <div class="loading-wrapper">Loading...</div> }
+        @case ('empty') { <div class="loading-wrapper">No results found</div> }
+        @case ('error') { <div class="loading-wrapper">There was an error loading data. Please try again later</div> }
+    }
+}
+<footer>
+    <span>For demonstration purposes, the data has been limited to 1000 items</span>
+</footer>
+
+@if (modalRow(); as row) {
+    <div id="modal" (click)="closeModal()">
+        <div id="modalDiv" class="item-card-modal" (click)="stopPropagation($event)"
+            [innerHTML]="row.item_name | loreTransform : row.item_lore"></div>
+    </div>
+}
