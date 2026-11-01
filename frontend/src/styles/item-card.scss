@@ -1,0 +1,47 @@
+// Item card styling shared by the auction table and the profile tabs
+
+@font-face {
+    font-family: 'Minecraft';
+    src: url('https://fonts.cdnfonts.com/s/25041/1_MinecraftRegular1.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.item-card, .info-card {
+    position: absolute;
+    left: calc(100% + 2em);
+    display: none;
+    max-height: 35vh;
+    max-width: 30vw;
+    padding: 0.5em;
+    padding-right: calc(18px + 0.5em);
+    border: 2px solid #1b013b;
+    border-radius: 5px;
+    background-color: #100110;
+    font-family: 'Minecraft', sans-serif;
+    white-space: nowrap;
+    z-index: 1;
+    overflow: auto;
+    scrollbar-gutter: stable;
+}
+
+.item-card-0 { color: #000000; }
+.item-card-1 { color: #0000AA; }
+.item-card-2 { color: #00AA00; }
+.item-card-3 { color: #00AAAA; }
+.item-card-4 { color: #AA0000; }
+.item-card-5 { color: #AA00AA; }
+.item-card-6 { color: #FFAA00; }
+.item-card-7 { color: #AAAAAA; }
+.item-card-8 { color: #555555; }
+.item-card-9 { color: #5555FF; }
+.item-card-a { color: #55FF55; }
+.item-card-b { color: #55FFFF; }
+.item-card-c { color: #FF5555; }
+.item-card-d { color: #FF55FF; }
+.item-card-e { color: #FFFF55; }
+.item-card-f { color: #FFFFFF; }
+.item-card-l { font-weight: bold; }
+.item-card-m { text-decoration: line-through; }
+.item-card-n { text-decoration: underline; }
+.item-card-o { font-style: italic; }

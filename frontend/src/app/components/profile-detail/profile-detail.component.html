@@ -1,0 +1,205 @@
+<ng-template #itemList let-items let-title="title">
+    @if (title) { <h3>{{ title }}</h3> }
+    @if (items.length === 0) {
+        <p class="empty">Nothing here</p>
+    } @else {
+        <div class="tiles">
+            @for (item of items; track $index) {
+                <app-item-icon [name]="item.name || item.id" [lore]="item.lore" [iconId]="item.icon_id"
+                    [count]="item.count" [rarityClass]="rarityClass(item.rarity)" />
+            }
+        </div>
+    }
+</ng-template>
+
+<ng-template #pairs let-rows>
+    @if (rows.length === 0) {
+        <p class="empty">Nothing here</p>
+    } @else {
+        <div class="stats">
+            @for (row of rows; track row.label) {
+                <div class="stat">
+                    <span class="label">{{ row.label }}</span>
+                    <span class="value">{{ row.value | number }}</span>
+                </div>
+            }
+        </div>
+    }
+</ng-template>
+
+<section class="detail">
+    <div class="summary stats">
+        <div class="stat"><span class="label">SkyBlock Level</span><span class="value">{{ detail().skyblock_level }}</span></div>
+        <div class="stat"><span class="label">SkyBlock XP</span><span class="value">{{ detail().skyblock_xp | number }}</span></div>
+        <div class="stat"><span class="label">Purse</span><span class="value">{{ detail().purse | number:'1.0-0' }}</span></div>
+        <div class="stat"><span class="label">Bank</span><span class="value">{{ detail().bank === null ? 'N/A' : (detail().bank | number:'1.0-0') }}</span></div>
+        @if (detail().created_at) {
+            <div class="stat"><span class="label">Created</span><span class="value">{{ detail().created_at | date:'mediumDate' }}</span></div>
+        }
+    </div>
+
+    <div class="tabs-wrapper">
+        @if (canScrollLeft()) {
+            <button type="button" class="tabs-arrow left" aria-label="Scroll tabs left" (click)="scrollTabs(-1)">&#8249;</button>
+        }
+        <div class="tabs" role="tablist" #tabsEl (scroll)="updateScroll()">
+            @for (tab of tabs; track tab) {
+                <button type="button" role="tab" class="tab" [class.active]="activeTab() === tab"
+                    [attr.aria-selected]="activeTab() === tab" (click)="select(tab)">{{ tab }}</button>
+            }
+        </div>
+        @if (canScrollRight()) {
+            <button type="button" class="tabs-arrow right" aria-label="Scroll tabs right" (click)="scrollTabs(1)">&#8250;</button>
+        }
+    </div>
+
+    <div class="panel" role="tabpanel">
+        @switch (activeTab()) {
+            @case ('Gear') {
+                <ng-container *ngTemplateOutlet="itemList; context: { $implicit: detail().gear.armor, title: 'Armor' }" />
+                <ng-container *ngTemplateOutlet="itemList; context: { $implicit: detail().gear.equipment, title: 'Equipment' }" />
+            }
+            @case ('Accessories') {
+                <div class="stats">
+                    <div class="stat"><span class="label">Magical Power</span><span class="value">{{ detail().accessories.magical_power }}</span></div>
+                    <div class="stat"><span class="label">Selected Power</span><span class="value">{{ detail().accessories.selected_power ?? 'None' }}</span></div>
+                    @for (t of detail().accessories.tuning; track t.label) {
+                        <div class="stat"><span class="label">Tuning: {{ t.label }}</span><span class="value">{{ t.value }}</span></div>
+                    }
+                </div>
+                <ng-container *ngTemplateOutlet="itemList; context: { $implicit: detail().accessories.items, title: 'Accessory Bag (' + detail().accessories.items.length + ')' }" />
+            }
+            @case ('Pets') {
+                @if (detail().pets.length === 0) {
+                    <p class="empty">Nothing here</p>
+                } @else {
+                    <div class="tiles">
+                        @for (pet of detail().pets; track $index) {
+                            <app-item-icon [name]="pet.name" [lore]="pet.lore" [iconId]="pet.icon_id"
+                                [rarityClass]="rarityClass(pet.tier)" />
+                        }
+                    </div>
+                }
+            }
+            @case ('Inventory') {
+                @for (group of inventoryGroups(); track group.title) {
+                    <ng-container *ngTemplateOutlet="itemList; context: { $implicit: group.items, title: group.title }" />
+                }
+                <h3>Sacks</h3>
+                @if (detail().inventory.sacks.length === 0) {
+                    <p class="empty">Nothing here</p>
+                } @else {
+                    <div class="tiles scroll">
+                        @for (sack of detail().inventory.sacks; track sack.name) {
+                            <app-item-icon [name]="sack.name" [lore]="sack.lore" [iconId]="sack.icon_id" />
+                        }
+                    </div>
+                }
+            }
+            @case ('Skills') {
+                <ul class="bars">
+                    @for (skill of detail().skills; track skill.name) {
+                        <li>
+                            <span class="label">{{ skill.name }}</span>
+                            <span class="bar"><span class="fill" [style.width.%]="progress(skill.level, skill.cap)"></span></span>
+                            <span class="value">{{ skill.level }} / {{ skill.cap }}</span>
+                            <span class="xp">{{ skill.xp | number:'1.0-0' }} XP</span>
+                        </li>
+                    }
+                </ul>
+            }
+            @case ('Dungeons') {
+                <div class="stats">
+                    <div class="stat"><span class="label">Catacombs Level</span><span class="value">{{ detail().dungeons.catacombs_level }}</span></div>
+                    <div class="stat"><span class="label">Catacombs XP</span><span class="value">{{ detail().dungeons.catacombs_xp | number:'1.0-0' }}</span></div>
+                    <div class="stat"><span class="label">Selected Class</span><span class="value">{{ detail().dungeons.selected_class ?? 'None' }}</span></div>
+                    <div class="stat"><span class="label">Secrets Found</span><span class="value">{{ detail().dungeons.secrets | number }}</span></div>
+                </div>
+                <h3>Classes</h3>
+                <div class="stats">
+                    @for (c of detail().dungeons.classes; track c.name) {
+                        <div class="stat"><span class="label">{{ c.name }}</span><span class="value">{{ c.level }}</span></div>
+                    }
+                </div>
+                @for (group of dungeonFloorGroups(); track group.title) {
+                    <h3>{{ group.title }}</h3>
+                    @if (group.floors.length === 0) {
+                        <p class="empty">Nothing here</p>
+                    } @else {
+                        <table class="table">
+                            <thead><tr><th>Floor</th><th>Completions</th><th>Played</th><th>Best Score</th></tr></thead>
+                            <tbody>
+                                @for (f of group.floors; track f.floor) {
+                                    <tr><td>{{ f.floor }}</td><td>{{ f.completions }}</td><td>{{ f.times_played }}</td><td>{{ f.best_score ?? '-' }}</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+            }
+            @case ('Slayer') {
+                @if (detail().slayer.length === 0) {
+                    <p class="empty">Nothing here</p>
+                } @else {
+                    <table class="table">
+                        <thead><tr><th>Boss</th><th>Level</th><th>XP</th><th>Kills by tier</th></tr></thead>
+                        <tbody>
+                            @for (s of detail().slayer; track s.name) {
+                                <tr>
+                                    <td>{{ s.name }}</td><td>{{ s.level }}</td><td>{{ s.xp | number }}</td>
+                                    <td>@for (k of s.kills; track k.tier) { <span class="chip">T{{ k.tier }}: {{ k.kills }}</span> } @empty { - }</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
+            @case ('Minions') {
+                <p class="note">{{ detail().minions.length }} unique minions, {{ detail().minions_crafted }} crafted in total</p>
+                @if (detail().minions.length === 0) {
+                    <p class="empty">Nothing here</p>
+                } @else {
+                    <div class="tiles">
+                        @for (m of detail().minions; track m.name) {
+                            <app-item-icon [name]="m.name + ' Minion'" [lore]="m.lore" [iconId]="m.icon_id" />
+                        }
+                    </div>
+                }
+            }
+            @case ('Bestiary') {
+                <p class="note">{{ detail().bestiary.total_kills | number }} total kills</p>
+                <input class="filter" type="search" placeholder="Filter mobs" [value]="bestiaryFilter()" (input)="onFilter('bestiary', $event)">
+                @if (filteredBestiary().length === 0) {
+                    <p class="empty">Nothing here</p>
+                } @else {
+                    <div class="tiles scroll">
+                        @for (f of filteredBestiary(); track f.name) {
+                            <app-item-icon [name]="f.name" [lore]="f.lore" [iconId]="f.icon_id" />
+                        }
+                    </div>
+                }
+            }
+            @case ('Collections') {
+                <input class="filter" type="search" placeholder="Filter collections" [value]="collectionFilter()" (input)="onFilter('collections', $event)">
+                @if (filteredCollections().length === 0) {
+                    <p class="empty">Nothing here</p>
+                } @else {
+                    <div class="tiles scroll">
+                        @for (c of filteredCollections(); track c.name) {
+                            <app-item-icon [name]="c.name" [lore]="c.lore" [iconId]="c.icon_id" />
+                        }
+                    </div>
+                }
+            }
+            @case ('Crimson Isle') {
+                <ng-container *ngTemplateOutlet="pairs; context: { $implicit: detail().crimson_isle }" />
+            }
+            @case ('Rift') {
+                <ng-container *ngTemplateOutlet="pairs; context: { $implicit: detail().rift }" />
+            }
+            @case ('Misc') {
+                <ng-container *ngTemplateOutlet="pairs; context: { $implicit: detail().misc }" />
+            }
+        }
+    </div>
+</section>

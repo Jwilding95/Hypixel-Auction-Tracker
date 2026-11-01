@@ -1,2 +1,5 @@
 node_modules/
+dist/
+.angular/
+backend/.env
 .claude/settings.local.json

@@ -1,0 +1,56 @@
+<main class="main">
+    <form class="search-form" (submit)="$event.preventDefault(); search()">
+        <div class="search-wrapper">
+            <input id="username" type="search" placeholder="Minecraft username" [formControl]="usernameForm" autocomplete="off" maxlength="16">
+        </div>
+        <button type="submit" class="search-button" [disabled]="profilesService.loading()">Search</button>
+    </form>
+
+    @if (profilesService.loading()) {
+        <p class="message">Loading profiles...</p>
+    } @else if (profilesService.error()) {
+        <p class="message error">{{ profilesService.error() }}</p>
+    } @else if (profilesService.searched() && profilesService.profiles().length === 0) {
+        <p class="message">No SkyBlock profiles found for this player</p>
+    }
+
+    @if (profilesService.player(); as player) {
+        @if (!profilesService.error()) {
+            <div class="player">
+                <img [src]="'https://mc-heads.net/avatar/' + player.id + '/64'" [alt]="player.name + ' icon'" width="64" height="64">
+                <span class="player-name">{{ player.name }}</span>
+            </div>
+        }
+    }
+
+    <ul class="profiles">
+        @for (profile of profilesService.profiles(); track profile.profile_id) {
+            <li>
+                <button class="profile" type="button"
+                    [class.selected]="profilesService.selectedProfile()?.profile_id === profile.profile_id"
+                    (click)="select(profile)">
+                    <span class="name">{{ profile.cute_name }}</span>
+                    <span class="mode">{{ profile.game_mode | titlecase }}</span>
+                    @if (profile.selected) {
+                        <span class="last-played">Last played</span>
+                    }
+                </button>
+            </li>
+        }
+    </ul>
+
+    @if (profilesService.selectedProfile(); as profile) {
+        <section class="overview">
+            <h2>{{ profile.cute_name }} <span class="mode">{{ profile.game_mode | titlecase }}</span></h2>
+            @if (profilesService.overviewLoading()) {
+                <p class="message">Loading profile data...</p>
+            } @else if (profilesService.overviewError()) {
+                <p class="message error">{{ profilesService.overviewError() }}</p>
+            } @else {
+                @if (profilesService.overview(); as detail) {
+                    <app-profile-detail [detail]="detail" />
+                }
+            }
+        </section>
+    }
+</main>

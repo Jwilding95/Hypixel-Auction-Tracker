@@ -1,0 +1,17 @@
+<span class="tile" [class]="rarityClass()" (mouseenter)="onEnter($event)" (mouseleave)="hovered.set(false)" (wheel)="onWheel($event)">
+    @if (src(); as url) {
+        <img class="icon" [src]="url" [alt]="name()" width="40" height="40" loading="lazy" (error)="onImageError()">
+    } @else {
+        <span class="fallback">{{ name().charAt(0) }}</span>
+    }
+    @if (count() > 1) {
+        <span class="count">{{ count() }}</span>
+    }
+    @if (hovered()) {
+        <div class="item-card"
+            [style.left.px]="cardPosition().left" [style.right.px]="cardPosition().right"
+            [style.top.px]="cardPosition().top" [style.bottom.px]="cardPosition().bottom"
+            [innerHTML]="name() | loreTransform : lore()">
+        </div>
+    }
+</span>

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/app.component.scss"],
-  "sourcesContent": ["#main {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: flex-start;\r\n    align-items: center;\r\n    box-sizing: border-box;\r\n    cursor: default;\r\n    width: 100%;\r\n\r\n    app-header {\r\n        width: 100%;\r\n        box-sizing: border-box;\r\n    }\r\n}\r\n\r\napp-home, app-advanced-search {\r\n    display: block;\r\n    width: 80%\r\n}"],
-  "mappings": ";AAAA,CAAA;AACI,WAAA;AACA,kBAAA;AACA,mBAAA;AACA,eAAA;AACA,cAAA;AACA,UAAA;AACA,SAAA;;AAEA,CATJ,KASI;AACI,SAAA;AACA,cAAA;;AAIR;AAAA;AACI,WAAA;AACA,SAAA;;",
-  "names": []
-}

@@ -1,0 +1,58 @@
+@import "../../../styles/colors.scss";
+
+:host {
+    display: inline-block;
+}
+
+.tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    box-sizing: border-box;
+    border: 2px solid var(--rarity, #3b3b3b);
+    background-color: $slate-7;
+
+    .icon {
+        width: 36px;
+        height: 36px;
+        image-rendering: pixelated;
+        object-fit: contain;
+    }
+
+    .fallback {
+        color: $text-grey;
+        font-weight: bold;
+    }
+
+    .count {
+        position: absolute;
+        right: 1px;
+        bottom: 0;
+        font-size: 0.7em;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 0 #000;
+    }
+
+    // Fixed so the card isn't clipped by scrolling lists; coordinates are set on hover
+    .item-card {
+        display: block;
+        left: auto; // the shared card style offsets from its parent; coordinates are bound inline
+        position: fixed;
+        z-index: 1000;
+        pointer-events: none;
+    }
+}
+
+.rarity-common { --rarity: #ffffff; }
+.rarity-uncommon { --rarity: #55ff55; }
+.rarity-rare { --rarity: #5555ff; }
+.rarity-epic { --rarity: #aa00aa; }
+.rarity-legendary { --rarity: #ffaa00; }
+.rarity-mythic { --rarity: #ff55ff; }
+.rarity-divine { --rarity: #55ffff; }
+.rarity-special, .rarity-very-special { --rarity: #ff5555; }
+.rarity-ultimate { --rarity: #aa0000; }
